@@ -5,6 +5,7 @@ class Survey_Model extends CC_Model
 	public function get_Question_List($type, $requestdata=[], $querydata=[])
 	{ 
 		
+		
 		$this->db->select('*');
 		$this->db->from('survey_question');
 		
