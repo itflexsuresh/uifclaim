@@ -10,8 +10,11 @@ class Index extends CC_Controller
 	
 	public function index()
 	{
-		$data['plugins'] = [];
-		$data['content'] = $this->load->view('company/covidregulation/index', '', true);
+		
+		$pagedata['notification'] 	= $this->getNotification();
+		$data['plugins']			= ['datatables', 'datatablesresponsive', 'sweetalert', 'validation'];
+		//$data['content'] = $this->load->view('company/covidregulation/index', '', true);
+		$data['content'] 			= $this->load->view('company/covidregulation/index', (isset($pagedata) ? $pagedata : ''), true);
 		$this->layout2($data);
 	}
 }
