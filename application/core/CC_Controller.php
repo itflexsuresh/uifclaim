@@ -12,6 +12,7 @@ class CC_Controller extends CI_Controller
 		$this->load->model('Users_Model');
 		$this->load->model('Company_Model');
 		$this->load->model('Managearea_Model');
+		$this->load->model('Employee_Model');
 		
 		$segment1 = $this->uri->segment(1);
 		if($segment1!='' && $segment1!='authentication' && $segment1!='login' && $segment1!='forgotpassword' && $segment1!='common') $this->middleware();
@@ -152,6 +153,44 @@ class CC_Controller extends CI_Controller
 		
 		$data['plugins']				= ['validation','datepicker','select2'];
 		$data['content'] 				= $this->load->view('common/company/profile', (isset($pagedata) ? $pagedata : ''), true);
+		$this->layout2($data);
+	}
+
+	public function employeelisting($id='', $extras=[]){
+		if($id!='' && !$this->input->post()){		
+		
+			$result = $this->Employee_Model->getList('row', ['id' => $id, 'status' => ['1','2','3']]);
+			
+			if($result){
+				$pagedata['result'] = $result;
+			}else{
+				$this->session->set_flashdata('error', 'No Record Found.');
+				redirect('company/employee/index'); 
+			}
+		}
+		if($this->input->post()){
+
+			$requestData 	= 	$this->input->post();
+			if($requestData['submit']=='submit'){
+				$data 	=  $this->Employee_Model->actionEmployee($requestData);
+				if($data) $message = 'Employee Listing '.(($id=='') ? 'created' : 'updated').' successfully.';
+			}
+			// else{
+			// 	$data 			= 	$this->Installationtype_Model->changestatus($requestData);
+			// 	$message		= 	'Installation Type deleted successfully.';
+			// }
+
+			if(isset($data)) $this->session->set_flashdata('success', $message);
+			else $this->session->set_flashdata('error', 'Try Later.');
+			
+			redirect('company/employee/index'); 
+		}
+
+		$pagedata['notification'] 	= $this->getNotification();
+		$pagedata['custom'] 			= $this->load->view('common/custom/custom', '', true);
+		$data['plugins']			= ['datatables', 'datatablesresponsive', 'sweetalert', 'validation', 'datepicker'];
+		// $data['content'] = $this->load->view('company/employee/index', '', true);
+		$data['content'] 			= $this->load->view('common/company/employee_listing', (isset($pagedata) ? $pagedata : ''), true);
 		$this->layout2($data);
 	}
 }
