@@ -24,5 +24,6 @@ class Index extends CC_Controller
 		$data['plugins'] 	= [];
 		$data['content'] 	= $this->load->view('company/dashboard/index', $pagedata, true);
 		$this->layout2($data);
+		
 	}
 }
