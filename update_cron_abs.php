@@ -1,5 +1,5 @@
 <?php 
-
+///
 $conn = mysqli_connect('localhost','tecdocuser','q4NdAps**S','tecdoc');
 $select1=mysqli_query($conn,"select * from `list_articles_supplier:abs`");
 	$fetch1=mysqli_fetch_array($select1);
