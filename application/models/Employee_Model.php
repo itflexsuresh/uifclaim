@@ -102,4 +102,18 @@ class Employee_Model extends CC_Model
 			return '2';
 		}
 	}
+
+		public function autosearchEmployee($postData){ 
+
+		$this->db->select('emp.*, concat(emp.name, " ", emp.surname) as fullname');
+		$this->db->from('employee emp');
+
+		$this->db->like('emp.name',$postData['search_keyword']);
+		$this->db->or_like('emp.surname',$postData['search_keyword']);
+	
+		$query = $this->db->get();
+		$result1 = $query->result_array(); 
+
+		return $result1;
+	}
 }

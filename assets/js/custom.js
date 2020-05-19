@@ -2,7 +2,7 @@ function baseurl(){
 	var base = window.location;
 
 	if(base.host=='localhost'){
-		return base.protocol + "//" + base.host + "/nantha/uif/";
+		return base.protocol + "//" + base.host + "/uifclaim/";
 	}else{
 		return base.protocol + "//" + base.host + "/auditit_new/pirb/";
 	}
