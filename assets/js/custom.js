@@ -457,7 +457,7 @@ function userautocomplete(data1=[], data2=[], customfunction='', customappend=''
 				var id 				= (v.id) ? 'data-id="'+v.id+'"' : '';
 				var name 			= (v.name) ? 'data-name="'+v.name+'"' : '';	
 				var surname 			= (v.surname) ? 'data-name="'+v.surname+'"' : '';			
-				result.push('<li '+id+' '+name+' class="autocompletelist'+appendclass+'">'+v.name+'</li>');
+				result.push('<li '+id+' '+name+' class="autocompletelist'+appendclass+'">'+v.name+" "+v.surname+'</li>');
 			})
 			
 			var append = '<ul class="autocomplete_list">'+result.join('')+'</ul>';

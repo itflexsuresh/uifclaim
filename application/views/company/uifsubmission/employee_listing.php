@@ -44,6 +44,7 @@ $monthly_remuneration 	= isset($result['monthly_remuneration']) ? $result['month
 							<div class="form-group col-md-6">
 								<label for="name">Employee</label>
 								<input type="text" class="form-control" id="searchemp" placeholder="No Employees with employed or short time status called up here" value="">
+								<input type="hidden" id="user_id_hide" name="user_id_hide" value="0">
 								<div id="suggesstion_box" style="display: none;"></div>
 							</div>
 						</div>
@@ -51,7 +52,7 @@ $monthly_remuneration 	= isset($result['monthly_remuneration']) ? $result['month
 						<div class="row">
 							<div class="form-group col-md-6">
 								<label for="name">First Name: </label>
-								<input type="text" class="form-control" id="searchemp" placeholder="First Name" value="">
+								<input type="text" class="form-control" id="fname" placeholder="First Name" value="">
 							</div>
 							<div class="form-group col-md-6">
 								<img src="" class="" width="100">
@@ -61,7 +62,7 @@ $monthly_remuneration 	= isset($result['monthly_remuneration']) ? $result['month
 						<div class="row">
 							<div class="form-group col-md-6">
 								<label for="name">Last Name (Surname):</label>
-								<input type="text" class="form-control" id="searchemp" placeholder="Last Name (Surname)" value="">
+								<input type="text" class="form-control" id="lname" placeholder="Last Name (Surname)" value="">
 							</div>
 						</div>
 
@@ -125,7 +126,7 @@ $('#searchemp').keyup(function(){
 	
 	var strlength = $.trim($('#searchemp').val()).length;	
 	if(strlength > 0)  {
-		userautocomplete(["#searchemp"], [$(this).val(), '3']);
+		userautocomplete(["#searchemp", "#user_id_hide", "#suggesstion_box"], [$(this).val(), '3']);
 		$("#suggesstion_box").show();
 	}
 	else{
