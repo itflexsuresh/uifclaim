@@ -286,4 +286,44 @@ class Users_Model extends CC_Model
 			return 'true';
 		}
 	}
+	public function getUif($type, $requestdata=[]){
+		$this->db->select('uif.*');
+		$this->db->from('user_covid_submission uif');
+
+		if(isset($requestdata['id'])) 		$this->db->where('uif.user_id', $requestdata['comp_id']);
+
+		$query = $this->db->get();
+		
+		if($type=='all') 		$result = $query->result_array();
+		elseif($type=='row') 	$result = $query->row_array();
+		
+		return $result;
+		
+	}
+
+	public function uifAction($data){
+		
+		$id 		= 	$data['id'];
+		$datetime	= 	date('Y-m-d H:i:s');
+		
+		$users		=	[];
+		$users['covid_submission'] 	= isset($data['covid_submission']) ? $data['covid_submission'] : '0';
+		$users['agreement'] 		= isset($data['agreement']) ? $data['agreement'] : '0';
+		
+		$this->db->select('count(*) as count');
+		$this->db->from('user_covid_submission');
+		$exist =  $this->db->where('user_id', $id)->get()->row_array();
+			
+		if($exist['count'] == '0'){
+
+			$users['user_id'] 	= $id;
+			$users['created_at'] 	= $datetime;
+			//print_r($users);die;
+			$result		= $this->db->insert('user_covid_submission', $users);
+		}else{
+			$result = $this->db->update('user_covid_submission', $users, ['user_id' => $id]);
+		}
+
+		return $result;
+	}
 }

@@ -12,13 +12,32 @@ class Index extends CC_Controller
 	public function index()
 	{
 		$userid = $this->getUserID();
-		if ($userid) {
-			$data = $this->Users_Model->getUserDetails('row',['comp_id' => $userid]);
-			
-			if ($data) {
-				$pagedata['result'] = $data;
+		if ($this->input->post()) {
+			$requestData 	= 	$this->input->post();
+
+			if($requestData['submit']=='submit'){
+				$formresult 	=  $this->Users_Model->uifAction($requestData);
+				if($formresult) $message = 'UIF Covid Submissions Submitted Successfully.';
 			}
+
+			if(isset($formresult)) $this->session->set_flashdata('success', $message);
+			else $this->session->set_flashdata('error', 'Try Later.');
+			
+			redirect('company/aboutuif/index/');
+			
+		}else{
+			if ($userid) {
+			$uifdata = $this->Users_Model->getUif('row',['comp_id' => $userid]);	
+			$data = $this->Users_Model->getUserDetails('row',['comp_id' => $userid]);			
+				if ($data && $uifdata) {
+					$pagedata['result'] = $data;
+					$pagedata['uifresult'] = $uifdata;
+				}
+			}
+
 		}
+		
+
 
 
 		$pagedata['notification'] 	= $this->getNotification();
