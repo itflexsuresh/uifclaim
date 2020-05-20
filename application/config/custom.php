@@ -29,3 +29,11 @@ $config['emp_status'] 				= 	[
 											'2' => 'Laid Off',
 											'3' => 'Dismissed'
 										];
+
+$config['uifsubmissions_status'] 		= 	[
+											'0' => 'Submission Required',
+											'1' => 'Admin Reviewing',
+											'2' => 'UIF Submitted',
+											'3' => 'Application Issues',
+											'4' => 'Application Rejected'
+										];										

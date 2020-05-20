@@ -28,7 +28,7 @@ $checksurvey 			= isset($checksurvey) ? $checksurvey : '0';
 </div>
 
 <input type="hidden" id="checksurvey" value="<?php echo count($checksurvey);?>">
-<form class="form" id="formId" method="post" action="">
+<form class="form" id="formId" method="post" action="<?php echo base_url()."company/dashboard/index/index"; ?>">
 <div id="otpmodal" class="modal fade" role="dialog">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -53,7 +53,7 @@ $checksurvey 			= isset($checksurvey) ? $checksurvey : '0';
 				} 
 				?>
 				<input type="hidden" name="totalquestion" id="totalquestion" value="<?php echo $i; ?>">
-				<button type="submit" class="btn btn-success verify" name="submit" value="submit">Continue</button>
+				<button type="button" class="btn btn-success verify" name="submit" value="submit">Continue</button>
 				</br>
 				<span class="checkmeg" style="color:red;">Please check the all radio button.</span>
 			</div>
@@ -72,7 +72,7 @@ $checksurvey 			= isset($checksurvey) ? $checksurvey : '0';
 	});
 
 	$('.verify').click(function(e){
-		e.preventDefault();
+		
 		var submitvalue = '1';
 		var totalquestion = $('#totalquestion').val();		
 		for (i = 1; i <= totalquestion; i++) {

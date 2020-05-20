@@ -85,7 +85,7 @@ class Survey_Model extends CC_Model
 			$request['created_by'] = $this->getUserID();
 
 			if($request !=''){
-				// $users_survey = $this->db->insert('users_survey', $request);
+				$users_survey = $this->db->insert('users_survey', $request);
 			}
 		}
 	
