@@ -168,16 +168,17 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
-								<label>Mobile Phone *</label>
-								<div><?php customtextbox('10', 'mobile_no', $mobile_no); ?></div>
-							</div>
-						</div>
-						<div class="col-md-12">
-							<div class="form-group">
 								<label>Work Phone *</label>
 								<div><?php customtextbox('10', 'work_no', $work_no); ?></div>
 							</div>
 						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label>Mobile Phone *</label>
+								<div><?php customtextbox('10', 'mobile_no', $mobile_no); ?></div>
+							</div>
+						</div>
+
 						<div class="col-md-12">
 							<div class="form-group">
 								<label>Email Address *</label>
@@ -275,7 +276,7 @@
 							<div class="form-group">
 								<label>Name of the Banking Institute of the Register Company *</label>
 								<?php
-									echo form_dropdown('bank_name', [], $bank_name, ['id' => 'bank_name', 'class'=>'form-control', 'data-select' => 'select1']);
+									echo form_dropdown('bank_name', $bankdetails, $bank_name, ['id' => 'bank_name', 'class'=>'form-control', 'data-select' => 'select1']);
 								?>
 							</div>
 						</div>
@@ -295,7 +296,7 @@
 							<div class="form-group">
 								<label>Account Type *</label>
 								<?php
-									echo form_dropdown('account_type', [], $account_type, ['id' => 'account_type', 'class'=>'form-control', 'data-select' => 'select1']);
+									echo form_dropdown('account_type', $acctypes, $account_type, ['id' => 'account_type', 'class'=>'form-control', 'data-select' => 'select1']);
 								?>
 							</div>
 						</div>

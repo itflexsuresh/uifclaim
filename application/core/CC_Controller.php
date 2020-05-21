@@ -13,6 +13,7 @@ class CC_Controller extends CI_Controller
 		$this->load->model('Company_Model');
 		$this->load->model('Managearea_Model');
 		$this->load->model('Employee_Model');
+		$this->load->model('Datatype_Model');
 		
 		$segment1 = $this->uri->segment(1);
 		if($segment1!='' && $segment1!='authentication' && $segment1!='login' && $segment1!='forgotpassword' && $segment1!='common') $this->middleware();
@@ -115,6 +116,22 @@ class CC_Controller extends CI_Controller
 		if(count($data) > 0) return ['' => 'Select Province']+array_column($data, 'name', 'id');
 		else return [];
 	}
+
+	public function bankDetails()
+	{
+		$data = $this->Datatype_Model->BankgetList('all', ['status' => ['1']]);
+
+		if(count($data) > 0) return ['' => 'Select Name of the bank']+array_column($data, 'name', 'id');
+		else return [];
+	}
+
+	public function accountTypes()
+	{
+		$data = $this->Datatype_Model->AccountgetList('all', ['status' => ['1']]);
+		
+		if(count($data) > 0) return ['' => 'Select Account Types']+array_column($data, 'name', 'id');
+		else return [];
+	}
 	
 	public function companyprofile($id, $pagedata=[], $extras=[])
 	{
@@ -145,6 +162,8 @@ class CC_Controller extends CI_Controller
 		
 		$pagedata['notification'] 		= $this->getNotification();
 		$pagedata['province'] 			= $this->getProvinceList();
+		$pagedata['bankdetails'] 		= $this->bankDetails();
+		$pagedata['acctypes'] 			= $this->accountTypes();
 		$pagedata['yesno'] 				= $this->getCustomList($this->config->item('custom_yesno'));
 		$pagedata['worktype'] 			= $this->getCustomList($this->config->item('custom_worktype'));
 		$pagedata['employeestatus'] 	= $this->getCustomList($this->config->item('custom_employeestatus'));
