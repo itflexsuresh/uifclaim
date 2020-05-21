@@ -62,7 +62,7 @@ class Index extends CC_Controller
 			$data 						= $this->Employee_Model->getList('row', ['id' => $requestData['emp_id_hide']]);
 			$pagedata['result'] 		= $data;
 			$html 						= $this->load->view('pdf/permit', (isset($pagedata) ? $pagedata : '') ,true);
-			
+			//print_r($html);die;
 			$this->pdf->loadHtml($html);
 			$this->pdf->setPaper('A4', 'portrait');
 			$this->pdf->render();			
