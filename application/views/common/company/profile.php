@@ -175,7 +175,7 @@
 						<div class="col-md-12">
 							<div class="form-group">
 								<label>Mobile Phone *</label>
-								<div><?php customtextbox('10', 'mobile_no', $mobile_no); ?></div>
+								<div><?php customtextbox('10', 'mobile_no', $mobile_no); ?></div><label id="notif-bg" style="color: red;">Note all SMS and 2nd level Authentication will be sent to this mobile number above</label>
 							</div>
 						</div>
 
@@ -184,6 +184,7 @@
 								<label>Email Address *</label>
 								<input type="text" class="form-control" value="<?php echo $email; ?>" disabled>
 							</div>
+							<label id="notif-bg" style="color: red;">* Note all emails notifications will be sent to this email address above</label>
 						</div>
 					</div>	
 					
@@ -310,6 +311,7 @@
 								<input type="hidden" name="bank_letter" class="bankletter" value="<?php echo $bank_letter; ?>">
 								<p>(Image/File Size Smaller than 5mb)</p>
 							</div>
+							<label id="notif-bg" style="color: red;">Note: Bank Confirmation should not be older than three months</label>
 						</div>
 					</div>
 					
