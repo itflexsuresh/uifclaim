@@ -22,7 +22,7 @@ function ajaxdatatables(selector, options={}){
 	}
 	
 	var order = (options.order) ? options.order : [[0, 'asc']];
-	
+	 
 	var columndefs 		= [];
 	var columndefsobj 	= {};
 	if(options.target) 	columndefsobj['targets'] 	= options.target;
@@ -438,7 +438,7 @@ function citysuburb(data1=[], data2=[], data3=[]){
 }
 
 function userautocomplete(data1=[], data2=[], customfunction='', customappend=''){
-	var userurl 		= baseurl()+"ajax/index/ajaxuserautocomplete";
+	var userurl 		= baseurl()+"common/ajax/ajaxuserautocomplete";
 	var appendclass 	= (data1[0]) ? data1[0].substring(1) : '';
 	
 	var postdata = {};
@@ -455,15 +455,9 @@ function userautocomplete(data1=[], data2=[], customfunction='', customappend=''
 			
 			$(data).each(function(i, v){
 				var id 				= (v.id) ? 'data-id="'+v.id+'"' : '';
-				var name 			= (v.name) ? 'data-name="'+v.name+'"' : '';
-				var count 			= (v.count) ? 'data-count="'+v.count+'"' : '';
-				var electronic 		= (v.coc_electronic) ? 'data-electronic="'+v.coc_electronic+'"' : '';
-				
-				var openaudit 		= (v.openaudit) ? 'data-openaudit="'+v.openaudit+'"' : '';
-				var mtd 			= (v.mtd) ? 'data-mtd="'+v.mtd+'"' : '';
-				var allowedaudit 	= (v.allowedaudit) ? 'data-allowedaudit="'+v.allowedaudit+'"' : '';
-				
-				result.push('<li '+openaudit+' '+mtd+' '+allowedaudit+' '+id+' '+name+' '+count+' '+electronic+' class="autocompletelist'+appendclass+'">'+v.name+'</li>');
+				var name 			= (v.name) ? 'data-name="'+v.name+'"' : '';	
+				var surname 			= (v.surname) ? 'data-name="'+v.surname+'"' : '';			
+				result.push('<li '+id+' '+name+' class="autocompletelist'+appendclass+'">'+v.name+" "+v.surname+'</li>');
 			})
 			
 			var append = '<ul class="autocomplete_list">'+result.join('')+'</ul>';
@@ -472,13 +466,7 @@ function userautocomplete(data1=[], data2=[], customfunction='', customappend=''
 		
 		$(document).on('click', '.autocompletelist'+appendclass, function(){
 			var id 				= $(this).attr('data-id');
-			var name 			= $(this).attr('data-name');
-			var count 			= $(this).attr('data-count');
-			var electronic 		= $(this).attr('data-electronic');
-			
-			var openaudit 		= $(this).attr('data-openaudit');
-			var mtd 			= $(this).attr('data-mtd');
-			var allowedaudit 	= $(this).attr('data-allowedaudit');
+			var name 			= $(this).attr('data-name');			
 			
 			$(data1[0]).val(name);
 			$(data1[1]).val(id);

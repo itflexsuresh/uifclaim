@@ -9,8 +9,9 @@ class Ajax extends CC_Controller
 		$this->load->model('CC_Model');
 		$this->load->model('Validation_Model');
 		$this->load->model('Managearea_Model');
+		$this->load->model('Uifsubmission_Model');
 	}
-	
+	 
 	public function ajaxuseremailvalidation()
 	{	
 		$data 	= $this->Validation_Model->useremailvalidation($this->input->post());		
@@ -95,5 +96,17 @@ class Ajax extends CC_Controller
 		}
 		
 		echo json_encode($json);
+	}
+
+	public function ajaxuserautocomplete()
+	{ 
+		$post = $this->input->post();
+
+		if($post['type']== 3){
+			$data 	=   $this->Uifsubmission_Model->autosearchEmployee($post);
+		}
+
+		
+		echo json_encode($data);
 	}
 }
