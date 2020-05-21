@@ -456,8 +456,9 @@ function userautocomplete(data1=[], data2=[], customfunction='', customappend=''
 			$(data).each(function(i, v){
 				var id 				= (v.id) ? 'data-id="'+v.id+'"' : '';
 				var name 			= (v.name) ? 'data-name="'+v.name+'"' : '';	
-				var surname 			= (v.surname) ? 'data-name="'+v.surname+'"' : '';			
-				result.push('<li '+id+' '+name+' class="autocompletelist'+appendclass+'">'+v.name+" "+v.surname+'</li>');
+				var surname 			= (v.surname) ? 'data-surname="'+v.surname+'"' : '';
+				var filename 			= (v.file) ? 'data-filename="'+baseurl()+"assets/uploads/employee/"+v.file+'"' : '';			
+				result.push('<li '+id+' '+name+' '+surname+' '+filename+' class="autocompletelist'+appendclass+'">'+v.name+" "+v.surname+'</li>');
 			})
 			
 			var append = '<ul class="autocomplete_list">'+result.join('')+'</ul>';
@@ -466,11 +467,16 @@ function userautocomplete(data1=[], data2=[], customfunction='', customappend=''
 		
 		$(document).on('click', '.autocompletelist'+appendclass, function(){
 			var id 				= $(this).attr('data-id');
-			var name 			= $(this).attr('data-name');			
+			var name 			= $(this).attr('data-name');	
+			var surname 		= $(this).attr('data-surname');
+			var filename 		= $(this).attr('data-filename');		
 			
-			$(data1[0]).val(name);
+			$(data1[0]).val(name+" "+surname);
 			$(data1[1]).val(id);
 			$(data1[2]).html('');
+			$(data1[3]).val(name);
+			$(data1[4]).val(surname);			
+			$(data1[5]).attr('src',filename);
 			
 			if(customfunction!='' && !$(this).attr('data-allowedaudit')) customfunction(name, id, count, electronic);
 			else if(customfunction!='' && $(this).attr('data-allowedaudit')) customfunction($(data1[0]), openaudit, mtd, allowedaudit);
