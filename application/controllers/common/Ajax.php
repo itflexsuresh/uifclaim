@@ -11,7 +11,7 @@ class Ajax extends CC_Controller
 		$this->load->model('Managearea_Model');
 		$this->load->model('Uifsubmission_Model');
 	}
-	
+	 
 	public function ajaxuseremailvalidation()
 	{	
 		$data 	= $this->Validation_Model->useremailvalidation($this->input->post());		

@@ -22,7 +22,7 @@ function ajaxdatatables(selector, options={}){
 	}
 	
 	var order = (options.order) ? options.order : [[0, 'asc']];
-	
+	 
 	var columndefs 		= [];
 	var columndefsobj 	= {};
 	if(options.target) 	columndefsobj['targets'] 	= options.target;
