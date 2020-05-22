@@ -541,6 +541,118 @@ $(function(){
 	
 })
 
+
+
+$(".company_payee_no").keyup(function() {
+	var idccount = 0;
+	var currentid = '';
+	if($(this).val()!==''){
+		$(this).each(function( index ) {
+			currentid = $( this ).attr('id');
+			var splitId = currentid.split("_",1);
+			var numconversion = parseInt(splitId);
+			var NextCount = numconversion+1
+			var param = "#"+NextCount+"_company_payee_no";
+			$( param ).focus();
+ 		});
+	}else{
+	return false;
+	}  
+});
+
+
+$(".company_register_no").keyup(function() {
+	var idccount1 = 0;
+	var currentid1 = '';
+	if($(this).val()!==''){
+		$(this).each(function( index ) {
+			currentid1 = $( this ).attr('id');
+			var splitId1 = currentid1.split("_",1);
+			var numconversion1 = parseInt(splitId1);
+			var NextCount1 = numconversion1+1
+			var param1 = "#"+NextCount1+"_company_register_no";
+			$( param1 ).focus();
+ 		});
+	}else{
+	return false;
+	}  
+});
+
+
+$(".uif_no").keyup(function() {
+	var idccount2 = 0;
+	var currentid2 = '';
+	if($(this).val()!==''){
+		$(this).each(function( index ) {
+			currentid2 = $( this ).attr('id');
+			var splitId2 = currentid2.split("_",1);
+			var numconversion2 = parseInt(splitId2);
+			var NextCount2 = numconversion2+1
+			var param2 = "#"+NextCount2+"_uif_no";
+			$( param2 ).focus();
+ 		});
+	}else{
+	return false;
+	}  
+});
+
+
+$(".id_no").keyup(function() {
+	var idccount3 = 0;
+	var currentid3 = '';
+	if($(this).val()!==''){
+		$(this).each(function( index ) {
+			currentid3 = $( this ).attr('id');
+			var splitId3 = currentid3.split("_",1);
+			var numconversion3 = parseInt(splitId3);
+			var NextCount3 = numconversion3+1
+			var param3 = "#"+NextCount3+"_id_no";
+			$( param3 ).focus();
+ 		});
+	}else{
+	return false;
+	}  
+});
+
+
+
+$(".work_no").keyup(function() {
+	var idccount4 = 0;
+	var currentid4 = '';
+	if($(this).val()!==''){
+		$(this).each(function( index ) {
+			currentid4 = $( this ).attr('id');
+			var splitId4 = currentid4.split("_",1);
+			var numconversion4 = parseInt(splitId4);
+			var NextCount4 = numconversion4+1
+			var param4 = "#"+NextCount4+"_work_no";
+			$( param4 ).focus();
+ 		});
+	}else{
+	return false;
+	}  
+});
+
+
+
+
+$(".mobile_no").keyup(function() {
+	var idccount5 = 0;
+	var currentid5 = '';
+	if($(this).val()!==''){
+		$(this).each(function( index ) {
+			currentid5 = $( this ).attr('id');
+			var splitId5 = currentid5.split("_",1);
+			var numconversion5 = parseInt(splitId5);
+			var NextCount5 = numconversion5+1
+			var param5 = "#"+NextCount5+"_mobile_no";
+			$( param5 ).focus();
+ 		});
+	}else{
+	return false;
+	}  
+});
+
 $('#uif_register').click(function(){
 	uifno();
 })
