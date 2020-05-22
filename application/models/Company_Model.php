@@ -108,13 +108,19 @@ class Company_Model extends CC_Model
 		if(isset($data['company_name'])) 			$request1['company_name'] 			= $data['company_name'];
 		if(isset($data['company_register_no'])) 	$request1['company_register_no'] 	= implode('', $data['company_register_no']); 
 		if(isset($data['company_payee_no'])) 		$request1['company_payee_no'] 		= implode('', $data['company_payee_no']);
-		if(isset($data['uif_register'])) 			$request1['uif_register'] 			= $data['uif_register'];
+		//if(isset($data['uif_register'])) 			$request1['uif_register'] 			= $data['uif_register'];		
 		if(isset($data['uif_no'])) 					$request1['uif_no'] 				= implode('', $data['uif_no']);
 		if(isset($data['uif_submission'])) 			$request1['uif_submission'] 		= $data['uif_submission'];
 		if(isset($data['uif_password'])) 			$request1['uif_password'] 			= $data['uif_password'];
 		if(isset($data['association_member'])) 		$request1['association_member'] 	= $data['association_member'];
 		if(isset($data['work_type'])) 				$request1['work_type'] 				= implode(',', $data['work_type']);
-		
+
+		if (isset($data['uif_register'])) {
+			$request1['uif_register']='1';
+		}else{
+			$request1['uif_register']='';
+		}
+		//echo "<pre>"; print_r($request1);die;
 		if(isset($request1)){
 			if(isset($data['user_id'])) $request1['user_id'] = $data['user_id'];
 			$usersdetailid	= 	(isset($data['usersdetailid'])) ?  $data['usersdetailid'] : '';
