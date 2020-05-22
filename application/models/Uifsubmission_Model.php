@@ -5,30 +5,43 @@ class Uifsubmission_Model extends CC_Model
 	public function getList($type, $requestdata=[], $querydata=[])
 	{ 
 		$user_id 		= $this->getUserID();
-		$current_date 	= date("Y-m-d");
-		$datetime		= date('Y-m-d H:i:s');
-		$today 			= date('d');
 
-		if($today >= '10') {
-			$this->db->select('*');
-			$this->db->from('uif_submissions');
-			$this->db->where('MONTH(sub_date)', date('m'));
-			$this->db->where('YEAR(sub_date)', date('Y'));
-			$this->db->where('user_id',$user_id);
-			$query 	= $this->db->get();
-			$result = $query->row_array();
-			$count 	= $query->num_rows();
-			if($count == 0){
-				$request['user_id'] 		= $user_id;
-				$request['sub_date'] 		= $current_date;
-				$request['total_employees'] = '0';
-				$request['status'] = '0';
-				$request['created_at'] 		= $datetime;
-				$request['created_by'] 		= $user_id;
-				$insert_id = $this->db->insert('uif_submissions', $request);
+		$this->db->select('ud.user_id,ud.company_register_no,e.user_id,e.name as fname, ucs.user_id, ucs.covid_submission, ucs.agreement');
+		$this->db->from('users_detail ud');	
+		$this->db->join('employee e', 'e.user_id=ud.user_id', 'left');
+		$this->db->join('user_covid_submission ucs', 'ucs.user_id=ud.user_id', 'left');
+		$this->db->where('ud.user_id',$user_id);
+		$this->db->where('ud.company_register_no != ""');
+		$this->db->where('e.name != ""');
+		$this->db->where('ucs.covid_submission','1');
+		$this->db->where('ucs.agreement','1');
+		$chk_query 	= $this->db->get();
+		$chk_result = $chk_query->result_array();
+		$chk_count 	= $chk_query->num_rows();
+		if($chk_count > 0){
+			$current_date 	= date("Y-m-d");
+			$datetime		= date('Y-m-d H:i:s');
+			$today 			= date('d');
+			if($today >= '10') {
+				$this->db->select('*');
+				$this->db->from('uif_submissions');
+				$this->db->where('MONTH(sub_date)', date('m'));
+				$this->db->where('YEAR(sub_date)', date('Y'));
+				$this->db->where('user_id',$user_id);
+				$query 	= $this->db->get();
+				$result = $query->row_array();
+				$count 	= $query->num_rows();
+				if($count == 0){
+					$request['user_id'] 		= $user_id;
+					$request['sub_date'] 		= $current_date;
+					$request['total_employees'] = '0';
+					$request['status'] = '0';
+					$request['created_at'] 		= $datetime;
+					$request['created_by'] 		= $user_id;
+					$insert_id = $this->db->insert('uif_submissions', $request);
+				}
 			}
 		}
-
 		
 		$this->db->select('*');
 		$this->db->from('uif_submissions');
@@ -52,9 +65,11 @@ class Uifsubmission_Model extends CC_Model
 	{ 
 		$uif_id = $querydata['uif_id'];
 
-		$this->db->select('*');
-		$this->db->from('uif_submissions_employees');
-		$this->db->where('uif_submissions_id',$uif_id);
+		$this->db->select('use.*, e.name as fname, e.surname as lname, e.id_no as id_no, e.passport_no as passport_no, e.contact_no as contact_no, e.file as file');
+		$this->db->from('uif_submissions_employees use');
+		$this->db->join('employee e', 'e.id=use.employee_id', 'left');
+		$this->db->where('use.uif_submissions_id',$uif_id);
+		if(isset($querydata['id'])) { $this->db->where('use.id',$querydata['id']); }
 		
 		if($type=='count'){
 			$result = $this->db->count_all_results();
@@ -70,32 +85,45 @@ class Uifsubmission_Model extends CC_Model
 	
 	public function action($data)
 	{
-				
-		$datetime				= 	date('Y-m-d H:i:s');
 		
-		if(isset($data['totalquestion'])) $totalquestion = $data['totalquestion'];
+		$datetime	= 	date('Y-m-d H:i:s');
+		$amount = "";
+
+		if(isset($data['amount'])) $amount_count = count($data['amount']);		
+		if(isset($amount_count)){			
+			
+			$amount_AR = $data['amount'];
+			foreach ($amount_AR as $key => $value) {
+				$amount   = $amount.$value;			
+			}			
+		}
+
+		$request['uif_submissions_id'] = $data['uif_submissions_id'];
+		$request['employee_id'] = $data['employee_id'];
+		$request['status'] = $data['emp_status'];
+
+		if($data['emp_status'] == '1'){
+			$request['amount'] = $amount;	
+		}
+		else{
+			$request['amount'] = '0';	
+		}
 		
-		if(isset($totalquestion)){			
-			$question = "";
-			$option = "";
-			for($i=1; $i <= $totalquestion ; $i++)				
-				if($i <= $totalquestion) {
-					$question = $question.$i.",";
-					$option   = $option.$data['option'.$i].",";
-				}
-			}
+		$request['created_at'] = $datetime;
+		$request['created_by'] = $this->getUserID();
 
-			$request['user_id'] = $this->getUserID();
-			$request['survey_id'] = '1';
-			$request['survey_question_id'] = $question;
-			$request['survey_question_option_id'] = $option;
-			$request['status'] = '1';
-			$request['created_at'] = $datetime;
-			$request['created_by'] = $this->getUserID();
-
-			if($request !=''){
-				// $users_survey = $this->db->insert('users_survey', $request);
+		if($request !=''){
+			if(isset($data['id']) && $data['id'] >0 ){
+				$id = $data['id'];
+				$result = $this->db->update('uif_submissions_employees', $request, ['id' => $id]);
 			}
+			else{
+				$result = $this->db->insert('uif_submissions_employees', $request);	
+			}
+			
+		}
+
+		return $result;
 	}
 
 	public function autosearchEmployee($postData){
@@ -103,6 +131,7 @@ class Uifsubmission_Model extends CC_Model
 		$this->db->select('*');
 		$this->db->from('employee');
 		$this->db->where('status','1');
+		// $this->db->where('user_id',$postData['user_id']);
 
 		$this->db->group_start();
 			$this->db->like('name',$postData['search_keyword']);

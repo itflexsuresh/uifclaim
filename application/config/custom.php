@@ -36,4 +36,9 @@ $config['uifsubmissions_status'] 		= 	[
 											'2' => 'UIF Submitted',
 											'3' => 'Application Issues',
 											'4' => 'Application Rejected'
-										];										
+										];		
+
+$config['uifsubmissions_emp_status'] 		= 	[
+											'0' => 'No',
+											'1' => 'Yes'										
+										];																			
