@@ -109,7 +109,8 @@ $check_adminid			 = isset($check_adminid) ? $results['check_adminid'] : '';;
 						<div class="row">						
 							<div class="form-group col-md-6">
 								<input type="hidden" id="uif_submissions_id" name="uif_submissions_id" value="<?php echo $uif_submissions_id; ?>">		
-								<input type="hidden" id="id" name="id" value="<?php echo $id; ?>">					
+								<input type="hidden" id="id" name="id" value="<?php echo $id; ?>">
+								<input type="hidden" id="user_id" name="user_id" value="<?php echo $check_adminid; ?>">					
 								<button type="submit" name="submit" value="submit" class="btn btn-primary"><?php echo $heading; ?></button>
 							</div>
 						</div>
@@ -203,7 +204,8 @@ $check_adminid			 = isset($check_adminid) ? $results['check_adminid'] : '';;
 
 	$('#searchemp').keyup(function(){
 		
-		var strlength = $.trim($('#searchemp').val()).length;	
+		var strlength = $.trim($('#searchemp').val()).length;
+		var user_id = $('#uif_submissions_id').val();	
 		if(strlength > 0)  {
 			userautocomplete(["#searchemp", "#employee_id", "#suggesstion_box","#fname","#lname","#imgcls"], [$(this).val(), '3']);
 			$("#suggesstion_box").show();

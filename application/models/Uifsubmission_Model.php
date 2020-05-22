@@ -131,6 +131,7 @@ class Uifsubmission_Model extends CC_Model
 		$this->db->select('*');
 		$this->db->from('employee');
 		$this->db->where('status','1');
+		// $this->db->where('user_id',$postData['user_id']);
 
 		$this->db->group_start();
 			$this->db->like('name',$postData['search_keyword']);
