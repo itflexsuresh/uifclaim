@@ -53,7 +53,7 @@ $checksurvey 			= isset($checksurvey) ? $checksurvey : '0';
 				} 
 				?>
 				<input type="hidden" name="totalquestion" id="totalquestion" value="<?php echo $i; ?>">
-				<button type="button" class="btn btn-success verify" name="submit" value="submit">Continue</button>
+				<button type="submit" class="btn btn-success verify" name="submit" value="submit">Continue</button>
 				</br>
 				<span class="checkmeg" style="color:red;">Please check the all radio button.</span>
 			</div>
@@ -69,7 +69,7 @@ $checksurvey 			= isset($checksurvey) ? $checksurvey : '0';
 		if(checksurvey == 0){	
 			$('#otpmodal').modal('show');
 		}
-	});
+	});	
 
 	$('.verify').click(function(e){
 		

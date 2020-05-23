@@ -2,6 +2,26 @@
 
 class Uifsubmission_Model extends CC_Model
 {
+	public function getCompanyList($type, $requestdata=[], $querydata=[])
+	{ 
+		$user_id 		= $this->getUserID();
+		$this->db->select('u.*, ud.*');
+		$this->db->from('users u');
+		$this->db->join('users_detail ud', 'ud.user_id=u.id', 'left');
+		$this->db->where('u.id',$user_id);
+		
+		if($type=='count'){
+			$result = $this->db->count_all_results();
+		}else{
+			$query = $this->db->get();
+			
+			if($type=='all') 		$result = $query->result_array();
+			elseif($type=='row') 	$result = $query->row_array();
+		}
+		
+		return $result;
+	}
+
 	public function getList($type, $requestdata=[], $querydata=[])
 	{ 
 		$user_id 		= $this->getUserID();
@@ -120,7 +140,15 @@ class Uifsubmission_Model extends CC_Model
 			else{
 				$result = $this->db->insert('uif_submissions_employees', $request);	
 			}
-			
+
+			//update the total_employees into uif_submissions
+			$this->db->select('*');
+			$this->db->from('uif_submissions_employees');
+			$this->db->where('uif_submissions_id',$data['uif_submissions_id']);
+			$query2 						= $this->db->get();
+			$result2 						= $query2->result_array();
+			$request2['total_employees'] 	= count($result2);
+			$result = $this->db->update('uif_submissions', $request2, ['id' => $data['uif_submissions_id']]);
 		}
 
 		return $result;
@@ -128,10 +156,11 @@ class Uifsubmission_Model extends CC_Model
 
 	public function autosearchEmployee($postData){
 		
+		$user_id = $this->getUserID();
 		$this->db->select('*');
 		$this->db->from('employee');
 		$this->db->where('status','1');
-		// $this->db->where('user_id',$postData['user_id']);
+		$this->db->where('user_id',$user_id);
 
 		$this->db->group_start();
 			$this->db->like('name',$postData['search_keyword']);
@@ -142,6 +171,30 @@ class Uifsubmission_Model extends CC_Model
 		$result = $query->result_array();
 		
 		return $result;
+	}
+
+	public function form_action($data)
+	{
+				
+		if($data['check_forma4'] == 'on') { $check_forma4 = '1'; } else { $check_forma4 = '0'; }
+		$request['formA4_status'] = $check_forma4;
+		
+		if($data['check_forma4'] == 'on') { $check_iopsa = '1'; } else { $check_iopsa = '0'; }
+		$request['IOPSA_status'] = $check_iopsa;
+		
+		if($data['check_forma4'] == 'on') { $check_memorandum = '1'; } else { $check_memorandum = '0'; }
+		$request['memorandum_status']= $check_memorandum;
+
+		$uifid 								= $data['uifid'];
+		$request['commencedtrading_status']	= $data['check_commenced_status'];		
+		if($data['check_commenced_status'] == '1'){
+			$commencedtrading_date = date("Y-m-d", strtotime($data['check_commenced']));
+			$request['commencedtrading_date'] = $commencedtrading_date;		
+		}
+		$shutdowntrading_date = date("Y-m-d", strtotime($data['check_shutdown']));
+		$request['shutdowntrading_date'] 	= $shutdowntrading_date; 
+
+		$result = $this->db->update('uif_submissions', $request, ['id' => $uifid]);
 	}
 	
 }
