@@ -658,6 +658,23 @@ $(".mobile_no").keyup(function() {
 	}  
 });
 
+$(".account_no").keyup(function() {
+	var idccount6 = 0;
+	var currentid6 = '';
+	if($(this).val()!==''){
+		$(this).each(function( index ) {
+			currentid6 = $( this ).attr('id');
+			var splitId6 = currentid6.split("_",1);
+			var numconversion6 = parseInt(splitId6);
+			var NextCount6 = numconversion6+1
+			var param6 = "#"+NextCount6+"_account_no";
+			$( param6 ).focus();
+ 		});
+	}else{
+	return false;
+	}  
+});
+
 $('#uif_register').click(function(){
 	uifno();
 })
