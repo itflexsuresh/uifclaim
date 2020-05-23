@@ -8,7 +8,7 @@ class Company_Model extends CC_Model
 		
 		if(in_array('users', $querydata)){
 			$users 			= 	[ 
-									'u.id','u.email','u.type'
+									'u.id','u.email','u.type','u.status'
 								];
 								
 			$select[] 		= 	implode(',', $users);
