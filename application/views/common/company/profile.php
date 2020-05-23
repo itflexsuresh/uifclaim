@@ -1,4 +1,5 @@
 <?php
+//print_r($result['physicaladdress']);die;
 	echo $custom;
 	
 	$usersdetailid 			= isset($result['usersdetailid']) ? $result['usersdetailid'] : '';
@@ -211,17 +212,19 @@
 								<div class="col-md-12">
 									<div class="form-group">
 										<label>City *</label>
-										<?php 
-											echo form_dropdown('address[1][city]', [], $city1, ['id' => 'city1', 'class' => 'form-control', 'data-select' => 'select1']); 
-										?>
+										<input type="text" class="form-control" name="address[1][city]"  value="<?php echo $city1; ?>">
+										<!-- <?php 
+											//echo form_dropdown('address[1][city]', [], $city1, ['id' => 'city1', 'class' => 'form-control', 'data-select' => 'select1']); 
+										?> -->
 									</div>
 								</div>
 								<div class="col-md-12">
 									<div class="form-group">
 										<label>Suburb *</label>
-										<?php
-											echo form_dropdown('address[1][suburb]', [], $suburb1, ['id' => 'suburb1', 'class'=>'form-control', 'data-select' => 'select1']);
-										?>
+										<input type="text" class="form-control" name="address[1][suburb]"  value="<?php echo $suburb1; ?>">
+										<!-- <?php
+											//echo form_dropdown('address[1][suburb]', [], $suburb1, ['id' => 'suburb1', 'class'=>'form-control', 'data-select' => 'select1']);
+										?> -->
 									</div>
 								</div>
 							</div>
@@ -248,17 +251,19 @@
 								<div class="col-md-12">
 									<div class="form-group">
 										<label>City *</label>
-										<?php 
-											echo form_dropdown('address[2][city]', [], $city2, ['id' => 'city2', 'class' => 'form-control', 'data-select' => 'select1']); 
-										?>
+										<input type="text" class="form-control" name="address[2][city]"  value="<?php echo $city2; ?>">
+										<!-- <?php 
+											//echo form_dropdown('address[2][city]', [], $city2, ['id' => 'city2', 'class' => 'form-control', 'data-select' => 'select1']); 
+										?> -->
 									</div>
 								</div>
 								<div class="col-md-12">
 									<div class="form-group">
 										<label>Suburb *</label>
-										<?php
-											echo form_dropdown('address[2][suburb]', [], $suburb2, ['id' => 'suburb2', 'class'=>'form-control', 'data-select' => 'select1']);
-										?>
+										<input type="text" class="form-control" name="address[2][suburb]"  value="<?php echo $suburb2; ?>">
+										<!-- <?php
+											//echo form_dropdown('address[2][suburb]', [], $suburb2, ['id' => 'suburb2', 'class'=>'form-control', 'data-select' => 'select1']);
+										?> -->
 									</div>
 								</div>
 								<div class="col-md-12">
