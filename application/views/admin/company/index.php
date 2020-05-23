@@ -12,7 +12,7 @@
 	</div>
 </div>
 
-
+<?php echo $notification; ?>
 <div class="row">	
 	<div class="col-12">
 		<div class="card">
