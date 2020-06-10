@@ -58,6 +58,27 @@ class Survey_Model extends CC_Model
 		
 		return $result;
 	}
+
+	public function checkcompany($type, $requestdata=[], $querydata=[])
+	{ 
+		$user_id = $this->getUserID();
+
+		$this->db->select('*');
+		$this->db->from('users_detail');
+		$this->db->where('user_id',$user_id);
+		$this->db->where('company_register_no != ""');
+		
+		if($type=='count'){
+			$result = $this->db->count_all_results();
+		}else{
+			$query = $this->db->get();
+			
+			if($type=='all') 		$result = $query->result_array();
+			elseif($type=='row') 	$result = $query->row_array();
+		}
+		
+		return $result;
+	}
 	
 	public function action($data)
 	{

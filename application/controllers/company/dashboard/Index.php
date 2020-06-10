@@ -16,13 +16,16 @@ class Index extends CC_Controller
 			if($result == '1')
 				$pagedata['success'] 	= $result;
 		} 
-		$questions = $this->Survey_Model->get_Question_List('all', ['type' => 'all']);
-		$options = $this->Survey_Model->get_Option_List('all', ['type' => 'all']);
-		$pagedata['checksurvey'] = $this->Survey_Model->checksurvey('all', ['type' => 'all']);
-		$pagedata['questions'] 	= $questions;
-		$pagedata['options'] 	= $options;
-		$data['plugins'] 	= [];
-		$data['content'] 	= $this->load->view('company/dashboard/index', $pagedata, true);
+		$questions 					= $this->Survey_Model->get_Question_List('all', ['type' => 'all']);
+		$options 					= $this->Survey_Model->get_Option_List('all', ['type' => 'all']);
+		$checksurvey 				= $this->Survey_Model->checksurvey('all', ['type' => 'all']);
+		$checkcompany 				= $this->Survey_Model->checkcompany('all', ['type' => 'all']);
+		$pagedata['checksurvey'] 	= count($checksurvey);
+		$pagedata['checkcompany'] 	= count($checkcompany);
+		$pagedata['questions'] 		= $questions;
+		$pagedata['options'] 		= $options;
+		$data['plugins'] 			= [];
+		$data['content'] 			= $this->load->view('company/dashboard/index', $pagedata, true);
 		$this->layout2($data);
 		
 	}

@@ -1,5 +1,6 @@
 <?php
-$checksurvey 			= isset($checksurvey) ? $checksurvey : '0';
+$checksurvey 	= isset($checksurvey) ? $checksurvey : '0';
+$checkcompany 	= isset($checkcompany) ? $checkcompany : '0';
 ?>
 
 <div class="row page-titles">
@@ -27,9 +28,10 @@ $checksurvey 			= isset($checksurvey) ? $checksurvey : '0';
 	</div>
 </div>
 
-<input type="hidden" id="checksurvey" value="<?php echo count($checksurvey);?>">
+<input type="hidden" id="checksurvey" value="<?php echo $checksurvey;?>">
+<input type="hidden" id="checkcompany" value="<?php echo $checkcompany;?>">
 <form class="form" id="formId" method="post" action="<?php echo base_url()."company/dashboard/index/index"; ?>">
-<div id="otpmodal" class="modal fade" role="dialog">
+<div id="otpmodal" class="modal fade" role="dialog" style="display: none;">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-body">
@@ -45,7 +47,11 @@ $checksurvey 			= isset($checksurvey) ? $checksurvey : '0';
 					foreach ($options as $key => $value2) { 
 						if($value2['survey_question_id'] == $value['id']) { 
 							$j = $j + 1;
-							echo'<div class="row"><input type="radio" name="option'.$value['id'].'" id="option_'.$i.'_'.$j.'" value="'.$value2['id'].'" ><label>'.$value2['options'].'</label></div>';
+							echo'
+							<div class="row">
+								<input type="radio" name="option'.$value['id'].'" id="option_'.$i.'_'.$j.'" value="'.$value2['id'].'" >&nbsp;&nbsp;
+								<label>'.$value2['options'].'</label>
+							</div>';
 					 	}
 					}
 					echo '<input type="hidden" id="option_count'.$value['id'].'" value="'.$j.'">';
@@ -53,9 +59,10 @@ $checksurvey 			= isset($checksurvey) ? $checksurvey : '0';
 				} 
 				?>
 				<input type="hidden" name="totalquestion" id="totalquestion" value="<?php echo $i; ?>">
-				<button type="submit" class="btn btn-success verify" name="submit" value="submit">Continue</button>
+				<button type="button" class="btn btn-success verify">Continue</button>
+				<button type="submit" class="submit_hidden" name="submit" value="submit">Continue</button>
 				</br>
-				<span class="checkmeg" style="color:red;">Please check the all radio button.</span>
+				<span class="checkmeg" style="color:red;">Please check the one answer for each question.</span>
 			</div>
 		</div>
 	</div>
@@ -64,9 +71,11 @@ $checksurvey 			= isset($checksurvey) ? $checksurvey : '0';
 
 <script type="text/javascript">
 	$( document ).ready(function() {
+		$('.submit_hidden').hide();
 		$('.checkmeg').hide();
 		var checksurvey = $('#checksurvey').val();
-		if(checksurvey == 0){	
+		var checkcompany = $('#checkcompany').val();
+		if(checksurvey == 0 && checkcompany > 0){	
 			$('#otpmodal').modal('show');
 		}
 	});	
@@ -98,13 +107,14 @@ $checksurvey 			= isset($checksurvey) ? $checksurvey : '0';
 		}
 		else{
 			console.log("sub val 1");
+			$( ".submit_hidden" ).trigger( "click" );
 			$('#formId').submit();
 		}
 	});
 	
 	$(document).click(function(e) {   
 	    if(e.target.id != 'info') {
-	        $('#otpmodal').modal('show');   
+	        // $('#otpmodal').modal('show');   
 	    } 
 	});
 		
